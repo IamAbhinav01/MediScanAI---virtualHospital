@@ -1,0 +1,20 @@
+[project]
+name = "virtualhospital"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "dotenv>=0.9.9",
+    "fastapi>=0.117.1",
+    "ipython>=8.37.0",
+    "langchain>=0.3.27",
+    "langchain-community>=0.3.29",
+    "langchain-groq>=0.3.8",
+    "langchain-mistralai>=0.2.12",
+    "langchain-nvidia-ai-endpoints>=0.3.18",
+    "langchain-ollama>=0.3.8",
+    "langgraph>=0.6.7",
+    "python-multipart>=0.0.20",
+    "uvicorn>=0.36.0",
+]

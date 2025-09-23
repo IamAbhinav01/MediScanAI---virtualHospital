@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="./output.css" rel="stylesheet" />
+    <title>MediScan AI</title>
+    <link rel="icon" type="image/png" href="../assests/logo.png" />
+  </head>
+  <body>
+    <div
+      class="relative min-h-screen bg-gray-100 p-8 flex items-center justify-center"
+    >
+      <div
+        class="bg-white/30 backdrop-blur-md rounded-3xl shadow-2xl p-6 grid grid-cols-5 gap-6 w-full max-w-6xl h-[600px]"
+      >
+        <div
+          class="col-span-1 bg-white/40 p-4 rounded-l-3xl flex flex-col items-center gap-8"
+        ></div>
+        <div class="col-span-4 p-4 flex flex-col gap-6">
+          <div class="flex items-center justify-between">
+            <h2 class="text-3xl font-semibold text-gray-800">
+              Book Your Appointment
+            </h2>
+          </div>
+          <div class="grid grid-cols-3 gap-6 flex-grow">
+            <div
+              class="col-span-2 bg-cover rounded-2xl p-8 flex items-center justify-center text-white"
+              style="
+                background-image: url('../assests/mediscan.png');
+                background-position: left;
+              "
+            >
+              <div class="text-center"></div>
+            </div>
+            <div class="col-span-1 flex flex-col gap-6">
+              <h3 class="text-2xl font-semibold text-blue-600 bg-emerald-200">
+                Choose the Specialist You Want to Consult
+              </h3>
+
+              <a href="brain-mri.html">
+                <div
+                  class="bg-blue-100 hover:bg-blue-500 hover:text-white hover:cursor-pointer rounded-2xl p-6 shadow-lg transition duration-300 ease-in-out"
+                >
+                  Neurologist
+                </div>
+              </a>
+
+              <a href="chest-ct.html">
+                <div
+                  class="bg-blue-100 hover:bg-blue-500 hover:text-white hover:cursor-pointer rounded-2xl p-6 shadow-lg transition duration-300 ease-in-out"
+                >
+                  Pulmonologist
+                </div>
+              </a>
+
+              <a href="alzheimer-detector.html">
+                <div
+                  class="bg-blue-100 hover:bg-blue-500 hover:text-white hover:cursor-pointer rounded-2xl p-6 shadow-lg transition duration-300 ease-in-out"
+                >
+                  Neuroradiologist
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

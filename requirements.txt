@@ -1,0 +1,23 @@
+python-dotenv>=0.9.9
+fastapi>=0.117.1
+uvicorn>=0.36.0
+python-multipart>=0.0.20
+
+# ML stack
+torch
+torchvision
+Pillow
+
+# LangChain + NVIDIA endpoints
+langchain>=0.3.27
+langchain-community>=0.3.29
+langchain-nvidia-ai-endpoints>=0.3.18
+
+# Optional
+ipython>=8.37.0
+langgraph>=0.6.7
+langchain-ollama>=0.3.8
+langchain-groq>=0.3.8
+langchain-mistralai>=0.2.12
+
+

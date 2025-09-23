@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pulmonologist</title>
+    <link href="./output.css" rel="stylesheet" />
+    <link rel="icon" type="image/png" href="../assests/pulmologo.png" />
+  </head>
+  <body
+    class="min-h-screen font-sans bg-gradient-to-br from-gray-900 via-blue-900 to-gray-900"
+  >
+    <div
+      class="container mx-auto min-h-screen flex items-center justify-center px-4"
+    >
+      <!-- Main Upload Section -->
+      <div
+        class="bg-white/10 backdrop-blur-md rounded-2xl p-8 w-full max-w-2xl shadow-2xl border border-white/20"
+      >
+        <div class="text-center mb-8">
+          <h1 class="text-3xl font-bold text-white mb-2">
+            CT/MRI Scan Analysis
+          </h1>
+          <p class="text-gray-300">
+            Upload your medical scan for AI-powered analysis
+          </p>
+        </div>
+
+        <!-- Upload Area -->
+        <div
+          class="bg-white/5 border-2 border-dashed border-white/20 rounded-xl p-8 text-center mb-6"
+        >
+          <input type="file" id="file-input" accept="image/*" class="hidden" />
+          <label
+            for="file-input"
+            class="cursor-pointer flex flex-col items-center justify-center gap-4"
+          >
+            <div
+              class="w-16 h-16 bg-blue-500/20 rounded-full flex items-center justify-center"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-8 w-8 text-blue-400"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+                />
+              </svg>
+            </div>
+            <div class="text-white">
+              <p class="font-semibold mb-1">Click to upload your scan</p>
+              <p class="text-sm text-gray-400">PNG, JPG up to 10MB</p>
+            </div>
+          </label>
+        </div>
+
+        <!-- Preview Area -->
+        <div id="preview-area" class="hidden mb-6">
+          <img id="scan-preview" class="w-full rounded-lg shadow-lg" />
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="flex gap-4 justify-end">
+          <button
+            id="clear-btn"
+            class="px-6 py-3 rounded-lg text-white bg-gray-600 hover:bg-gray-700 transition-colors hidden"
+          >
+            Clear
+          </button>
+          <button
+            id="analyze-btn"
+            class="px-6 py-3 rounded-lg text-white bg-blue-500 hover:bg-blue-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            disabled
+          >
+            Analyze Scan
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Chat Window -->
+    <div id="chat-window" class="fixed inset-0 hidden">
+      <div
+        class="min-h-screen flex items-center justify-center p-4 bg-gray-900/80 backdrop-blur-sm"
+      >
+        <div
+          class="bg-white/10 backdrop-blur-md rounded-3xl border border-white/20 w-full max-w-5xl h-[80vh] flex flex-col lg:flex-row p-6 gap-6"
+        >
+          <!-- Left: Chat messages -->
+          <div class="flex-1 flex flex-col">
+            <div class="flex items-center justify-between mb-6">
+              <div class="flex items-center gap-3">
+                <img
+                  src="../assests/pulmonolgist.png"
+                  alt="Doctor"
+                  class="w-10 h-10 rounded-full bg-white/10 p-1"
+                />
+                <div>
+                  <h2 class="text-white font-semibold">AI Medical Assistant</h2>
+                  <p class="text-sm text-gray-400">Analyzing your scan</p>
+                </div>
+              </div>
+              <button
+                id="close-chat"
+                class="text-gray-400 hover:text-white transition-colors"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-6 w-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              </button>
+            </div>
+
+            <div
+              id="chatMessages"
+              class="flex-1 overflow-y-auto flex flex-col-reverse gap-4 mb-4 scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent"
+            >
+              <!-- Messages will appear here -->
+            </div>
+
+            <div class="flex gap-4 mt-4">
+              <input
+                type="text"
+                id="chatInput"
+                placeholder="Type your message..."
+                class="flex-1 bg-white/10 text-white placeholder-gray-400 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 text-lg border border-white/10"
+              />
+              <button
+                id="sendBtn"
+                class="bg-gradient-to-r from-blue-500 to-purple-600 px-6 py-3 rounded-xl text-white font-semibold hover:from-blue-600 hover:to-purple-700 transition-all duration-300"
+              >
+                Send
+              </button>
+            </div>
+          </div>
+
+          <!-- Right: Scan preview -->
+          <div
+            class="lg:w-1/3 flex flex-col bg-white/5 rounded-2xl p-4 border border-white/10"
+          >
+            <h3 class="text-white font-semibold mb-4 text-center">
+              Scan Analysis
+            </h3>
+            <div
+              id="chat-scan-preview"
+              class="flex-1 flex flex-col items-center gap-4"
+            >
+              <img
+                id="chatScanImage"
+                class="w-full h-auto rounded-lg shadow-lg object-contain bg-black/20"
+              />
+              <div
+                class="w-full p-4 bg-white/5 rounded-xl border border-white/10"
+              >
+                <h4 class="text-white font-medium mb-2">Analysis Results</h4>
+                <ul
+                  class="text-sm text-gray-300 space-y-2"
+                  id="analysis-results"
+                >
+                  <!-- Analysis results will be added here -->
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // DOM Elements
+      const fileInput = document.getElementById('file-input');
+      const previewArea = document.getElementById('preview-area');
+      const scanPreview = document.getElementById('scan-preview');
+      const analyzeBtn = document.getElementById('analyze-btn');
+      const clearBtn = document.getElementById('clear-btn');
+      const chatWindow = document.getElementById('chat-window');
+      const closeChat = document.getElementById('close-chat');
+      const chatMessages = document.getElementById('chatMessages');
+      const chatInput = document.getElementById('chatInput');
+      const sendBtn = document.getElementById('sendBtn');
+      const chatScanImage = document.getElementById('chatScanImage');
+      const analysisResults = document.getElementById('analysis-results');
+
+      // State
+      let currentSessionId = null;
+      let currentClinicalReport = null;
+      const API_BASE_URL = 'http://localhost:8000'; // FastAPI backend
+
+      // Utility: add messages
+      function addMessage(type, content, isLoading = false) {
+        const msgDiv = document.createElement('div');
+        msgDiv.className = 'flex items-start gap-4 animate-fadeIn';
+
+        const isUser = type === 'user';
+        const loadingContent = `
+          <div class="flex space-x-2">
+            <div class="w-2 h-2 bg-blue-500 rounded-full animate-bounce" style="animation-delay: 0ms"></div>
+            <div class="w-2 h-2 bg-blue-500 rounded-full animate-bounce" style="animation-delay: 150ms"></div>
+            <div class="w-2 h-2 bg-blue-500 rounded-full animate-bounce" style="animation-delay: 300ms"></div>
+          </div>
+        `;
+        msgDiv.innerHTML = `
+      ${
+        !isUser
+          ? `<div class="w-8 h-8 rounded-full bg-white/10 flex-shrink-0 overflow-hidden">
+              <img src="../assests/pulmonolgist.png" alt="AI" class="w-full h-full object-cover"/>
+            </div>`
+          : ''
+      }
+      <div class="${isUser ? 'ml-auto' : ''} max-w-[80%]">
+        <div class="${
+          isUser
+            ? 'bg-gradient-to-r from-blue-500 to-purple-600'
+            : 'bg-white/10 backdrop-blur-sm border border-white/10'
+        } text-white px-6 py-3 rounded-2xl ${
+          isUser ? 'rounded-br-sm' : 'rounded-bl-sm'
+        } shadow-lg">
+          ${content}
+        </div>
+      </div>
+      ${
+        isUser
+          ? `<div class="w-8 h-8 rounded-full bg-purple-500/20 flex-shrink-0 flex items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-purple-300" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"/>
+              </svg>
+            </div>`
+          : ''
+      }
+    `;
+        chatMessages.insertBefore(msgDiv, chatMessages.firstChild);
+      }
+
+      // Show/Hide chat window
+      function showChatWindow() {
+        document.querySelector('.container').classList.add('opacity-0');
+        setTimeout(() => {
+          document.querySelector('.container').classList.add('hidden');
+          chatWindow.classList.remove('hidden');
+          setTimeout(() => chatWindow.classList.add('opacity-100'), 50);
+        }, 300);
+      }
+
+      function hideChatWindow() {
+        chatWindow.classList.remove('opacity-100');
+        setTimeout(() => {
+          chatWindow.classList.add('hidden');
+          document.querySelector('.container').classList.remove('hidden');
+          setTimeout(
+            () =>
+              document
+                .querySelector('.container')
+                .classList.remove('opacity-0'),
+            50
+          );
+        }, 300);
+      }
+
+      // File handling
+      fileInput.addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        if (file.size > 10 * 1024 * 1024) {
+          alert('File size must be less than 10MB');
+          return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = (ev) => {
+          scanPreview.src = ev.target.result;
+          previewArea.classList.remove('hidden');
+          clearBtn.classList.remove('hidden');
+          analyzeBtn.disabled = false;
+        };
+        reader.readAsDataURL(file);
+      });
+
+      clearBtn.addEventListener('click', () => {
+        fileInput.value = '';
+        previewArea.classList.add('hidden');
+        clearBtn.classList.add('hidden');
+        analyzeBtn.disabled = true;
+      });
+
+      // Analyze scan
+      analyzeBtn.addEventListener('click', async () => {
+        const file = fileInput.files[0];
+        if (!file) {
+          alert('Please upload a scan first!');
+          return;
+        }
+
+        analyzeBtn.disabled = true;
+        analyzeBtn.innerHTML =
+          '<span class="animate-pulse">Analyzing...</span>';
+
+        try {
+          const formData = new FormData();
+          formData.append('image', file);
+          formData.append('filename', file.name);
+          formData.append('exam_type', 'chest'); // TODO: Make this dynamic later
+
+          const response = await fetch(`${API_BASE_URL}/upload-scan`, {
+            method: 'POST',
+            body: formData,
+          });
+          if (!response.ok) throw new Error('Failed to upload scan');
+
+          const data = await response.json();
+
+          if (data.status === 'success') {
+            currentSessionId = data.session_id;
+            currentClinicalReport = data.clinical_report;
+
+            // Show chat window
+            showChatWindow();
+            chatScanImage.src = URL.createObjectURL(file);
+
+            // Initial clinical report message
+            const clinicalReport = `
+==================================
+CLINICAL DIAGNOSTIC REPORT
+==================================
+${data.clinical_report}
+
+DETAILED ANALYSIS
+----------------
+${data.detailed_findings || ''}
+
+PROBABILITIES
+------------
+${
+  data.probabilities
+    ? Object.entries(data.probabilities)
+        .map(([k, v]) => `${k}: ${(v * 100).toFixed(2)}%`)
+        .join('\n')
+    : ''
+}
+
+RECOMMENDATIONS
+--------------
+${data.recommendations || ''}
+        `;
+            addMessage('assistant', clinicalReport);
+
+            // Update right panel points
+            if (data.analysis_points) {
+              analysisResults.innerHTML = data.analysis_points
+                .map(
+                  (point) => `
+                <li class="flex items-center gap-2">
+                  <span class="w-2 h-2 bg-${point.color}-400 rounded-full"></span>
+                  ${point.text}
+                </li>`
+                )
+                .join('');
+            }
+          }
+        } catch (err) {
+          console.error('Error:', err);
+          alert('Failed to analyze the scan. Please try again.');
+        } finally {
+          analyzeBtn.disabled = false;
+          analyzeBtn.innerHTML = 'Analyze Scan';
+        }
+      });
+
+      // Chat interaction
+      sendBtn.addEventListener('click', async () => {
+        const message = chatInput.value.trim();
+        if (!message) return;
+
+        addMessage('user', message);
+        chatInput.value = '';
+
+        try {
+          console.log('Sending chat message with:', {
+            sessionId: currentSessionId,
+            clinicalReport: currentClinicalReport,
+            message: message,
+          });
+
+          const formData = new FormData();
+          formData.append('session_id', currentSessionId);
+          formData.append('user_message', message);
+
+          const response = await fetch(`${API_BASE_URL}/doctor-consultation`, {
+            method: 'POST',
+            body: formData,
+          });
+          if (!response.ok) throw new Error('Failed to get response');
+
+          const data = await response.json();
+          console.log('Received doctor response:', data);
+          if (data.status === 'success' && data.doctor_response) {
+            addMessage('assistant', data.doctor_response);
+          } else {
+            addMessage(
+              'assistant',
+              'I couldn’t process your question. Please try again.'
+            );
+          }
+
+          if (data.analysis_points) {
+            analysisResults.innerHTML = data.analysis_points
+              .map(
+                (point) => `
+              <li class="flex items-center gap-2">
+                <span class="w-2 h-2 bg-${point.color}-400 rounded-full"></span>
+                ${point.text}
+              </li>`
+              )
+              .join('');
+          }
+        } catch (err) {
+          console.error('Error:', err);
+          addMessage(
+            'assistant',
+            'Sorry, I encountered an error processing your request.'
+          );
+        }
+      });
+
+      chatInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter' && !e.shiftKey) {
+          e.preventDefault();
+          sendBtn.click();
+        }
+      });
+
+      closeChat.addEventListener('click', hideChatWindow);
+
+      // Smooth transitions
+      document
+        .querySelector('.container')
+        .classList.add('transition-opacity', 'duration-300');
+      chatWindow.classList.add(
+        'transition-opacity',
+        'duration-300',
+        'opacity-0'
+      );
+    </script>
+  </body>
+</html>
