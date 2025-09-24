@@ -6,8 +6,6 @@
 
 This project lets users upload medical scans (Brain MRI, Alzheimer’s-related scans, and Chest CT), runs PyTorch models to infer findings, then generates a structured clinical report with an LLM. Users can continue with a context-aware virtual doctor consultation.
 
-Add screenshots or GIFs of the UI (upload → report → chat) here.
-
 ```
 Frontend → FastAPI → PyTorch Models → LLM → Response
 ```
